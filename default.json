@@ -1,0 +1,6 @@
+{
+    "host": "0b0t.org",
+    "port": 25565,
+    "timeoutMessage": "Your teleport request to %s timed out.",
+    "deniedMessage": "Your request sent to %s was denied!"
+}

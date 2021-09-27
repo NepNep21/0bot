@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es2017",                                     
+    "useDefineForClassFields": true,
+    "module": "esnext",
+    "outDir": "dist",  
+    "esModuleInterop": true,                                                     
+    "forceConsistentCasingInFileNames": true,            
+    "strict": true,      
+    "skipLibCheck": true,
+    "moduleResolution": "node"
+  }
+}
