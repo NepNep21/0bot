@@ -44,10 +44,20 @@ function isShulker(item: Item): boolean {
 }
 
 let queue: Set<string> = new Set();
+let cooldownMap: Map<string, number> = new Map();
 let isDelivering = false;
 bot.on("chat", async (username, message) => {
     if (!isDelivering && message.startsWith("-kit")) {
+        if (cooldownMap.get(username)) {
+            bot.chat(`/w ${username} You are on cooldown, try again later`);
+            return;
+        }
+
         isDelivering = true;
+        // Minutes
+        const min = 5;
+        const max = 10;
+        cooldownMap.set(username, Math.round(Math.random() * (max - min) + min));
         bot.chat(`/w ${username} Getting kit, please wait`);
         const chestBlock = bot.findBlock({
             matching: data.blocksByName["chest"].id,
@@ -120,6 +130,16 @@ bot.on("forcedMove", async () => {
         isDelivering = false;
     }
 });
+
+setInterval(() => {
+    for (const [name, cooldown] of cooldownMap.entries()) {
+        if (cooldown - 1 <= 0) {
+            cooldownMap.delete(name);
+            return;
+        }
+        cooldownMap.set(name, cooldown - 1);
+    }
+}, 60000);
 
 while (true) {
     const command = await getInput("");
